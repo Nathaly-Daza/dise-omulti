@@ -1,3 +1,5 @@
+<!--Toda la cara de guías--->
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/c587a36d8d.js" crossorigin="anonymous"></script>
 
@@ -6,7 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camara App</title>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Diseño Multitrans</title>
+
+
     <style>
         body {
             margin: 80px;
@@ -17,316 +22,148 @@
             background-color: #f0f0f0;
         }
 
-        .camera-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .image-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            border: 1px solid black;
-            padding: 10px;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            padding-left: 3%;
-        }
-
-        .image-container img {
-            width: 100%;
-            max-height: 200px;
-
-        }
-
-        .div-checkbox {
-
-            margin-left:40%;
-        }
-        .checkbox-label {
-            margin-top: 5px;
-        }
-
-        .open-camera-button, .take-photo-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-left: 12%;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .column {
-            flex: 1;
-            margin-right: 20px;
-        }
-
-        .checkbox-group {
-            margin-bottom: 10px;
-        }
-
-        .observacion {
-            width: 100%;
-            height: 80px;
-        }
     </style>
 </head>
-<body>
-    <card>
-        <div class="container text-left">
-            <div class="row align-items-start" style="width:100%;">      
-                <div class="col">
-                    <label for="gMadre"> Guia Madre:</label>
-                    <input id="gMadre" class="form-control" type="text" readonly />
-                </div>
-                <div class="col">
-                    <label for="gHija"> Guia Hija:</label>
-                    <input id="gHija" class="form-control" type="text" readonly />
-                </div>
+    <body>
+        <!--------------------------------Datos principales de guías------------------------------------------>
+        <card>
+            <div class="container text-left">
+                <div class="row align-items-start" style="width:100%;">      
+                    <div class="col">
+                        <label for="gMadre"> Guia Madre:</label>
+                        <input id="gMadre" class="form-control" type="text" readonly />
+                    </div>
+                    <div class="col">
+                        <label for="gHija"> Guia Hija:</label>
+                        <input id="gHija" class="form-control" type="text" readonly />
+                    </div>
 
-                <div class="col-sm-2">
-                    <label for="fechaPla"> Fecha </label>
-                    <div class="input-group">
-                        <input id="fechaPla" class="form-control" type="text" value="" placeholder="dd/MM/yyyy" spellcheck="false" data-ms-editor="true" autocomplete="on" readonly/>
-                        <label class="input-group-append mb-0" for="fechaPla">
-                            <span class="input-group-text"> <i class="fa fa-calendar"> </i> </span>
-                        </label>
+                    <div class="col-sm-2">
+                        <label for="fechaPla"> Fecha </label>
+                        <div class="input-group">
+                            <input id="fechaPla" class="form-control" type="text" value="" placeholder="dd/MM/yyyy" spellcheck="false" data-ms-editor="true" autocomplete="on" readonly/>
+                            <label class="input-group-append mb-0" for="fechaPla">
+                                <span class="input-group-text"> <i class="fa fa-calendar"> </i> </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <label for="pesoG"> Peso guia :</label>
+                        <input id="pesoG" class="form-control" type="text" readonly />
+                    </div>
+
+                    <div class="col">
+                        <label for="piezasR"> Piezas restantes:</label>
+                        <input id="piezasR" class="form-control" type="text" readonly/>
                     </div>
                 </div>
-                
-                <div class="col">
-                    <label for="pesoG"> Peso guia :</label>
-                    <input id="pesoG" class="form-control" type="text" readonly />
-                </div>
+            </div>
+        </card>
+        <div class="col">
+            <label for="piezas"> Piezas:</label>
+            <input id="piezas" class="form-control" type="text" />
+        </div>
+    <!--------------------------------Fotografías peso guia------------------------------------------>
+        <div class="camera-container">
+            <div class="image-container" data-id="1">
+                <label for="check1">Agregar foto label:</label>           
+                <button class="open-camera-button" data-id="1">Abrir Cámara</button>
+                <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
+                <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
+                <div class="image-list-container" data-id="1"></div>
+                <input type="checkbox" id="check1" class="div-checkbox" disabled>
+            </div>
 
-                <div class="col">
-                    <label for="piezasR"> Piezas restantes:</label>
-                    <input id="piezasR" class="form-control" type="text" readonly/>
+            <div class="image-container" data-id="2">
+                <label for="check2">Agregar foto báscula:</label>
+                <button class="open-camera-button" data-id="2">Abrir Cámara</button>
+                <button class="take-photo-button" data-id="2" style="display:none;">Tomar Foto</button>
+                <canvas class="photo-container" data-id="2" style="display:none;"></canvas>
+                <div class="image-list-container" data-id="2"></div>
+                <input type="checkbox" id="check2" class="div-checkbox" disabled>
+
+            </div>
+
+            <div class="image-container" data-id="2">
+                <label for="check2">Agregar foto entorno:</label>
+                <button class="open-camera-button" data-id="3">Abrir Cámara</button>
+                <button class="take-photo-button" data-id="3" style="display:none;">Tomar Foto</button>
+                <canvas class="photo-container" data-id="3" style="display:none;"></canvas>
+                <div class="image-list-container" data-id="3"></div>
+                <input type="checkbox" id="check3" class="div-checkbox" disabled>
+            </div>
+
+            <div class="image-container" data-id="2">
+                <label for="check2">Agregar foto por debajo:</label>
+                <button class="open-camera-button" data-id="4">Abrir Cámara</button>
+                <button class="take-photo-button" data-id="4" style="display:none;">Tomar Foto</button>
+                <canvas class="photo-container" data-id="4" style="display:none;"></canvas>
+                <div class="image-list-container" data-id="4"></div>
+                <input type="checkbox" id="check4" class="div-checkbox" disabled>
+            </div>
+
+            <div class="image-container" data-id="2">
+                <label for="check2">Agregar foto novedad:</label>
+                <button class="open-camera-button" data-id="5">Abrir Cámara</button>
+                <button class="take-photo-button" data-id="5" style="display:none;">Tomar Foto</button>
+                <canvas class="photo-container" data-id="5" style="display:none;"></canvas>
+                <div class="image-list-container" data-id="5"></div>
+                <input type="checkbox" id="check5" class="div-checkbox" disabled>
+
+            </div>
+        </div>
+
+    <!--------------------------------Observaciones y novedades------------------------------------------>
+        <div class="container">
+            <div class="column">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="averia">
+                    <label for="averia">Avería</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rota">
+                    <label for="rota">Rota</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humeda">
+                    <label for="humeda">Húmeda</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="cintaDian">
+                    <label for="cintaDian">Cinta Dian</label>
+                </div>
+            </div>
+
+            <div class="column">
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="saqueo">
+                    <label for="saqueo">Saqueo</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="abolladada">
+                    <label for="abolladada">Abolladada</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="regandoContenido">
+                    <label for="regandoContenido">Regando Contenido</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="estibaRota">
+                    <label for="estibaRota">Estiba Rota</label>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="checkbox-group">
+                    <label for="observacion">Observación:</label>
+                    <textarea id="observacion" class="observacion"></textarea>
                 </div>
             </div>
         </div>
-    </card>
-    <div class="col">
-        <label for="piezas"> Piezas:</label>
-        <input id="piezas" class="form-control" type="text" />
-    </div>
-
-    <div class="camera-container">
-        <div class="image-container" data-id="1">
-            <label for="check1">Agregar foto label:</label>           
-            <button class="open-camera-button" data-id="1">Abrir Cámara</button>
-            <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
-            <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
-            <div class="image-list-container" data-id="1"></div>
-            <input type="checkbox" id="check1" class="div-checkbox" disabled>
-        </div>
-
-        <div class="image-container" data-id="2">
-            <label for="check2">Agregar foto báscula:</label>
-            <button class="open-camera-button" data-id="2">Abrir Cámara</button>
-            <button class="take-photo-button" data-id="2" style="display:none;">Tomar Foto</button>
-            <canvas class="photo-container" data-id="2" style="display:none;"></canvas>
-            <div class="image-list-container" data-id="2"></div>
-            <input type="checkbox" id="check2" class="div-checkbox" disabled>
-
-        </div>
-
-        <div class="image-container" data-id="2">
-            <label for="check2">Agregar foto entorno:</label>
-            <button class="open-camera-button" data-id="3">Abrir Cámara</button>
-            <button class="take-photo-button" data-id="3" style="display:none;">Tomar Foto</button>
-            <canvas class="photo-container" data-id="3" style="display:none;"></canvas>
-            <div class="image-list-container" data-id="3"></div>
-            <input type="checkbox" id="check3" class="div-checkbox" disabled>
-        </div>
-
-        <div class="image-container" data-id="2">
-            <label for="check2">Agregar foto por debajo:</label>
-            <button class="open-camera-button" data-id="4">Abrir Cámara</button>
-            <button class="take-photo-button" data-id="4" style="display:none;">Tomar Foto</button>
-            <canvas class="photo-container" data-id="4" style="display:none;"></canvas>
-            <div class="image-list-container" data-id="4"></div>
-            <input type="checkbox" id="check4" class="div-checkbox" disabled>
-        </div>
-
-        <div class="image-container" data-id="2">
-            <label for="check2">Agregar foto novedad:</label>
-            <button class="open-camera-button" data-id="5">Abrir Cámara</button>
-            <button class="take-photo-button" data-id="5" style="display:none;">Tomar Foto</button>
-            <canvas class="photo-container" data-id="5" style="display:none;"></canvas>
-            <div class="image-list-container" data-id="5"></div>
-            <input type="checkbox" id="check5" class="div-checkbox" disabled>
-
-        </div>
-    </div>
-
-<div class="container">
-    <div class="column">
-        <div class="checkbox-group">
-            <input type="checkbox" id="averia">
-            <label for="averia">Avería</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="rota">
-            <label for="rota">Rota</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="humeda">
-            <label for="humeda">Húmeda</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="cintaDian">
-            <label for="cintaDian">Cinta Dian</label>
-        </div>
-    </div>
-
-    <div class="column">
-
-        <div class="checkbox-group">
-            <input type="checkbox" id="saqueo">
-            <label for="saqueo">Saqueo</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="abolladada">
-            <label for="abolladada">Abolladada</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="regandoContenido">
-            <label for="regandoContenido">Regando Contenido</label>
-        </div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="estibaRota">
-            <label for="estibaRota">Estiba Rota</label>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="checkbox-group">
-            <label for="observacion">Observación:</label>
-            <textarea id="observacion" class="observacion"></textarea>
-        </div>
-    </div>
-</div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let streams = [];
-            let imageCaptures = [];
-            let imageCounts = [];
-
-            function requestCameraPermission(containerId) {
-                return new Promise(async (resolve, reject) => {
-                    try {
-                        // Solicitar permisos y acceder a la cámara
-                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                        streams[containerId] = stream;
-
-                        // Obtener una instancia de ImageCapture desde la transmisión de la cámara
-                        const track = stream.getVideoTracks()[0];
-                        imageCaptures[containerId] = new ImageCapture(track);
-
-                        // Mostrar el botón de captura
-                        document.querySelector(`.open-camera-button[data-id="${containerId}"]`).style.display = "none";
-                        document.querySelector(`.take-photo-button[data-id="${containerId}"]`).style.display = "block";
-                        document.querySelector(`.photo-container[data-id="${containerId}"]`).style.display = "block";
-
-                        resolve();
-                    } catch (error) {
-                        console.error(`Error al abrir la cámara en container ${containerId}:`, error);
-                        reject(error);
-                    }
-                });
-            }
-
-            function takePhoto(containerId) {
-                // Capturar una foto y agregarla a la lista
-                const imageCapture = imageCaptures[containerId];
-                const imageCount = imageCounts[containerId];
-
-                if (imageCapture && imageCount !== undefined) {
-                    imageCapture.takePhoto()
-                        .then(blob => {
-                            const url = URL.createObjectURL(blob);
-
-                            // Crear un elemento de imagen y agregarlo a la lista
-                            const img = document.createElement("img");
-                            img.src = url;
-                            img.alt = `Captured Image ${imageCount + 1}`;
-
-                            // Crear una casilla de verificación y marcarla automáticamente
-                            const checkbox = document.querySelector(`#check${containerId}`);
-                            checkbox.checked = true; // Marcar automáticamente
-                            checkbox.disabled = false; // Permitir que el usuario desmarque
-
-                            // Agregar la imagen al contenedor
-                            const container = document.querySelector(`.image-list-container[data-id="${containerId}"]`);
-                            container.appendChild(img);
-
-                            // Incrementar el contador de imágenes
-                            imageCounts[containerId]++;
-                        })
-                        .catch(error => console.error(`Error al tomar la foto en container ${containerId}:`, error));
-                }
-            }
-
-            function initializeContainer(containerId) {
-                imageCounts[containerId] = 0;
-
-                const openCameraButton = document.querySelector(`.open-camera-button[data-id="${containerId}"]`);
-                const takePhotoButton = document.querySelector(`.take-photo-button[data-id="${containerId}"]`);
-                const photoContainer = document.querySelector(`.photo-container[data-id="${containerId}"]`);
-
-                openCameraButton.addEventListener("click", () => {
-                    requestCameraPermission(containerId).catch(error => console.error(error));
-                });
-
-                takePhotoButton.addEventListener("click", () => {
-                    takePhoto(containerId);
-                });
-            }
-
-            // Inicializar los contenedores
-            for (let i = 1; i <= 5; i++) {
-                initializeContainer(i);
-            }
-
-            // Limpiar recursos al cerrar la página
-            window.addEventListener("beforeunload", () => {
-                for (const stream of streams) {
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                    }
-                }
-            });
-        });
-    </script>
-</body>
+    </body>
+    <script src="app.js"></script>
 </html>
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

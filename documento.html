@@ -39,11 +39,10 @@
     <h2>A continuación la firma</h2>
     <img src="" alt="Firma del usuario" id="firma">
     <br>
-    <a href="https://parzibyte.me/blog">By Parzibyte</a>
     <script>
         if (window.opener) {
             document.querySelector("#firma").src = window.opener.obtenerImagen();
-            // Imprimir documento. Si no quieres imprimir, remueve la siguiente línea
+            // Imprimir documento. 
             window.print();
         }
     </script>
