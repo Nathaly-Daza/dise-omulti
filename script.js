@@ -90,3 +90,57 @@ document.querySelectorAll(".canvas").forEach($canvas => {
         $canvas.addEventListener(nombreDeEvento, onMouseODedoLevantado);
     });
 });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const openCameraButton = document.getElementById("openCamera");
+    const takePhotoButton = document.getElementById("takePhoto");
+    const photoContainer = document.getElementById("photoContainer");
+    const imageListContainer = document.getElementById("imageList");
+    let stream, imageCapture;
+    let imageCount = 0;
+
+    openCameraButton.addEventListener("click", async () => {
+        try {
+            // Solicitar permisos y acceder a la cámara
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+            // Obtener una instancia de ImageCapture desde la transmisión de la cámara
+            const track = stream.getVideoTracks()[0];
+            imageCapture = new ImageCapture(track);
+
+            // Mostrar el botón de captura
+            openCameraButton.style.display = "none";
+            takePhotoButton.style.display = "block";
+            photoContainer.style.display = "block";
+        } catch (error) {
+            console.error("Error al abrir la cámara:", error);
+        }
+    });
+
+    takePhotoButton.addEventListener("click", () => {
+        // Capturar una foto y agregarla a la lista
+        if (imageCapture) {
+            imageCapture.takePhoto()
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+
+                    // Crear un elemento de imagen y agregarlo a la lista
+                    const img = document.createElement("img");
+                    img.src = url;
+                    img.alt = "Captured Image " + (imageCount + 1);
+                    imageListContainer.appendChild(img);
+
+                    // Incrementar el contador de imágenes
+                    imageCount++;
+                })
+                .catch(error => console.error("Error al tomar la foto:", error));
+        }
+    });
+
+    // Limpiar recursos al cerrar la página
+    window.addEventListener("beforeunload", () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+    });
+});
