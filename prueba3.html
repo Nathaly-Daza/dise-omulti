@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camara App</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+
+        .checkbox-label {
+            margin-top: 5px;
+        }
+
+        .open-camera-button, .take-photo-button, .switch-camera-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #video-preview {
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="camera-container">
+        <div class="image-container" data-id="1">
+            <label for="check1">Div 1:</label>
+            <input type="checkbox" id="check1" class="div-checkbox" disabled>
+            <button class="open-camera-button" data-id="1">Abrir Cámara</button>
+            <button class="switch-camera-button" data-id="1" style="display:none;">Cambiar Cámara</button>
+            <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
+            <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
+            <div class="image-list-container" data-id="1"></div>
+        </div>
+
+        <!-- Repite esta estructura para los containers 2, 3, 4 y 5 -->
+
+    </div>
+
+    <video id="video-preview" autoplay playsinline style="display: none;"></video>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let streams = [];
+            let imageCaptures = [];
+            let imageCounts = [];
+            let activeCamera = 'environment'; // Por defecto, usar la cámara trasera
+
+            function requestCameraPermission(containerId) {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        // Solicitar permisos y acceder a la cámara
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: activeCamera } });
+                        streams[containerId] = stream;
+
+                        // Mostrar la vista previa del video
+                        const videoPreview = document.getElementById('video-preview');
+                        videoPreview.srcObject = stream;
+                        videoPreview.style.display = "block";
+
+                        // Ocultar el botón de abrir cámara y mostrar los otros botones
+                        document.querySelector(`.open-camera-button[data-id="${containerId}"]`).style.display = "none";
+                        document.querySelector(`.switch-camera-button[data-id="${containerId}"]`).style.display = "block";
+                        document.querySelector(`.take-photo-button[data-id="${containerId}"]`).style.display = "block";
+
+                        resolve();
+                    } catch (error) {
+                        console.error(`Error al abrir la cámara en container ${containerId}:`, error);
+                        reject(error);
+                    }
+                });
+            }
+
+            function switchCamera(containerId) {
+                // Cambiar entre la cámara delantera y trasera si está disponible
+                activeCamera = (activeCamera === 'user') ? 'environment' : 'user';
+                requestCameraPermission(containerId).catch(error => console.error(error));
+            }
+
+            // Resto del código ...
+
+        });
+    </script>
+</body>
+</html>
