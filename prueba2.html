@@ -41,7 +41,7 @@
             margin-top: 5px;
         }
 
-        .open-camera-button, .take-photo-button {
+        .open-camera-button, .take-photo-button, .switch-camera-button {
             background-color: #007bff;
             color: white;
             border: none;
@@ -58,6 +58,7 @@
             <label for="check1">Div 1:</label>
             <input type="checkbox" id="check1" class="div-checkbox" disabled>
             <button class="open-camera-button" data-id="1">Abrir Cámara</button>
+            <button class="switch-camera-button" data-id="1" style="display:none;">Cambiar Cámara</button>
             <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
             <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
             <div class="image-list-container" data-id="1"></div>
@@ -67,6 +68,7 @@
             <label for="check2">Div 2:</label>
             <input type="checkbox" id="check2" class="div-checkbox" disabled>
             <button class="open-camera-button" data-id="2">Abrir Cámara</button>
+            <button class="switch-camera-button" data-id="2" style="display:none;">Cambiar Cámara</button>
             <button class="take-photo-button" data-id="2" style="display:none;">Tomar Foto</button>
             <canvas class="photo-container" data-id="2" style="display:none;"></canvas>
             <div class="image-list-container" data-id="2"></div>
@@ -81,12 +83,13 @@
             let streams = [];
             let imageCaptures = [];
             let imageCounts = [];
+            let activeCamera = 'environment'; // Por defecto, usar la cámara trasera
 
             function requestCameraPermission(containerId) {
                 return new Promise(async (resolve, reject) => {
                     try {
                         // Solicitar permisos y acceder a la cámara
-                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: activeCamera } });
                         streams[containerId] = stream;
 
                         // Obtener una instancia de ImageCapture desde la transmisión de la cámara
@@ -95,6 +98,7 @@
 
                         // Mostrar el botón de captura
                         document.querySelector(`.open-camera-button[data-id="${containerId}"]`).style.display = "none";
+                        document.querySelector(`.switch-camera-button[data-id="${containerId}"]`).style.display = "block";
                         document.querySelector(`.take-photo-button[data-id="${containerId}"]`).style.display = "block";
                         document.querySelector(`.photo-container[data-id="${containerId}"]`).style.display = "block";
 
@@ -141,10 +145,17 @@
                 imageCounts[containerId] = 0;
 
                 const openCameraButton = document.querySelector(`.open-camera-button[data-id="${containerId}"]`);
+                const switchCameraButton = document.querySelector(`.switch-camera-button[data-id="${containerId}"]`);
                 const takePhotoButton = document.querySelector(`.take-photo-button[data-id="${containerId}"]`);
                 const photoContainer = document.querySelector(`.photo-container[data-id="${containerId}"]`);
 
                 openCameraButton.addEventListener("click", () => {
+                    requestCameraPermission(containerId).catch(error => console.error(error));
+                });
+
+                switchCameraButton.addEventListener("click", () => {
+                    activeCamera = (activeCamera === 'user') ? 'environment' : 'user'; // Cambiar entre cámara delantera y trasera
+                    streams[containerId].getVideoTracks()[0].stop(); // Detener el flujo de la cámara actual
                     requestCameraPermission(containerId).catch(error => console.error(error));
                 });
 
