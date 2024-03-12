@@ -68,20 +68,22 @@
             <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
             <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
             <div class="image-list-container" data-id="1"></div>
+            <video id="video-preview" autoplay playsinline style="display: none;"></video>
+
         </div>
 
         <!-- Repite esta estructura para los containers 2, 3, 4 y 5 -->
 
     </div>
 
-    <video id="video-preview" autoplay playsinline style="display: none;"></video>
-
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let streams = [];
             let imageCaptures = [];
             let imageCounts = [];
             let activeCamera = 'environment'; // Por defecto, usar la cámara trasera
+            let videoPreview;
 
             function requestCameraPermission(containerId) {
                 return new Promise(async (resolve, reject) => {
@@ -91,7 +93,7 @@
                         streams[containerId] = stream;
 
                         // Mostrar la vista previa del video
-                        const videoPreview = document.getElementById('video-preview');
+                        videoPreview = document.getElementById('video-preview');
                         videoPreview.srcObject = stream;
                         videoPreview.style.display = "block";
 
@@ -114,7 +116,54 @@
                 requestCameraPermission(containerId).catch(error => console.error(error));
             }
 
-            // Resto del código ...
+            function takePhoto(containerId) {
+                // Capturar una foto y agregarla a la lista
+                const stream = streams[containerId];
+                const imageCapture = new ImageCapture(stream.getVideoTracks()[0]);
+                const imageCount = imageCounts[containerId];
+
+                imageCapture.takePhoto()
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+
+                        // Crear un elemento de imagen y agregarlo a la lista
+                        const img = document.createElement("img");
+                        img.src = url;
+                        img.alt = `Captured Image ${imageCount + 1}`;
+
+                        // Agregar la imagen al contenedor
+                        const container = document.querySelector(`.image-list-container[data-id="${containerId}"]`);
+                        container.appendChild(img);
+
+                        // Incrementar el contador de imágenes
+                        imageCounts[containerId]++;
+                    })
+                    .catch(error => console.error(`Error al tomar la foto en container ${containerId}:`, error));
+            }
+
+            // Event listener para abrir la cámara
+            document.querySelectorAll('.open-camera-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const containerId = this.getAttribute('data-id');
+                    requestCameraPermission(containerId).catch(error => console.error(error));
+                });
+            });
+
+            // Event listener para cambiar la cámara
+            document.querySelectorAll('.switch-camera-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const containerId = this.getAttribute('data-id');
+                    switchCamera(containerId);
+                });
+            });
+
+            // Event listener para tomar la foto
+            document.querySelectorAll('.take-photo-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const containerId = this.getAttribute('data-id');
+                    takePhoto(containerId);
+                });
+            });
 
         });
     </script>
