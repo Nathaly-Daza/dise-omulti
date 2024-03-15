@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!--SI SIRVEEE------------>
+    <!------------Pues si pero se desborda-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camara App</title>
@@ -14,20 +14,19 @@
             height: 100vh;
             background-color: #f0f0f0;
         }
-        .containerc{
+        .containerc {
             display: flex;
-            flex-direction: row;
-        }
-        
-        .video{
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+        }
+        .content {
+            display: flex;
         }
         .camera-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
         }
 
         .image-container {
@@ -60,72 +59,81 @@
             border-radius: 5px;
         }
 
+        #video-container {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+        }
+
         #video-preview {
             width: 100%;
             border-radius: 5px;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="containerc">
-        <div class="camera-container">
-            <div class="image-container" data-id="1">
-                <label for="check1">Agregar foto label:</label>
-                <input type="checkbox" id="check1" class="div-checkbox" disabled>
-                <button class="open-camera-button" data-id="1">Abrir Cámara</button>
-                <button class="switch-camera-button" data-id="1" style="display:none;">Cambiar Cámara</button>
-                <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
-                <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
-                <div class="image-list-container" data-id="1"></div>
-            </div>
+        <div class="content">
+            <div class="camera-container">
+                <div class="image-container" data-id="1">
+                    <label for="check1">Agregar foto label:</label>
+                    <input type="checkbox" id="check1" class="div-checkbox" disabled>
+                    <button class="open-camera-button" data-id="1">Abrir Cámara</button>
+                    <button class="switch-camera-button" data-id="1" style="display:none;">Cambiar Cámara</button>
+                    <button class="take-photo-button" data-id="1" style="display:none;">Tomar Foto</button>
+                    <canvas class="photo-container" data-id="1" style="display:none;"></canvas>
+                    <div class="image-list-container" data-id="1"></div>
+                </div>
+                <div class="image-container" data-id="2">
+                    <label for="check2">Agregar foto báscula:</label>
+                    <input type="checkbox" id="check2" class="div-checkbox" disabled>
+                    <button class="open-camera-button" data-id="2">Abrir Cámara</button>
+                    <button class="switch-camera-button" data-id="2" style="display:none;">Cambiar Cámara</button>
+                    <button class="take-photo-button" data-id="2" style="display:none;">Tomar Foto</button>
+                    <canvas class="photo-container" data-id="2" style="display:none;"></canvas>
+                    <div class="image-list-container" data-id="2"></div>
+                </div>
+    
+                <div class="image-container" data-id="3">
+                    <label for="check3">Agregar foto entorno:</label>
+                    <input type="checkbox" id="check3" class="div-checkbox" disabled>
+                    <button class="open-camera-button" data-id="3">Abrir Cámara</button>
+                    <button class="switch-camera-button" data-id="3" style="display:none;">Cambiar Cámara</button>
+                    <button class="take-photo-button" data-id="3" style="display:none;">Tomar Foto</button>
+                    <canvas class="photo-container" data-id="3" style="display:none;"></canvas>
+                    <div class="image-list-container" data-id="3"></div>
+                </div>
+    
+                <div class="image-container" data-id="4">
+                    <label for="check4">Agregar foto por debajo:</label>
+                    <input type="checkbox" id="check4" class="div-checkbox" disabled>
+                    <button class="open-camera-button" data-id="4">Abrir Cámara</button>
+                    <button class="switch-camera-button" data-id="4" style="display:none;">Cambiar Cámara</button>
+                    <button class="take-photo-button" data-id="4" style="display:none;">Tomar Foto</button>
+                    <canvas class="photo-container" data-id="4" style="display:none;"></canvas>
+                    <div class="image-list-container" data-id="4"></div>
+                </div>
+                
+                <div class="image-container" data-id="5">
+                    <label for="check5">Agregar foto novedad:</label>
+                    <input type="checkbox" id="check5" class="div-checkbox" disabled>
+                    <button class="open-camera-button" data-id="5">Abrir Cámara</button>
+                    <button class="switch-camera-button" data-id="5" style="display:none;">Cambiar Cámara</button>
+                    <button class="take-photo-button" data-id="5" style="display:none;">Tomar Foto</button>
+                    <canvas class="photo-container" data-id="5" style="display:none;"></canvas>
+                    <div class="image-list-container" data-id="5"></div>
+                </div>
+                <!-- Repite esta estructura para los demás divs -->
 
-            <div class="image-container" data-id="2">
-                <label for="check2">Agregar foto báscula:</label>
-                <input type="checkbox" id="check2" class="div-checkbox" disabled>
-                <button class="open-camera-button" data-id="2">Abrir Cámara</button>
-                <button class="switch-camera-button" data-id="2" style="display:none;">Cambiar Cámara</button>
-                <button class="take-photo-button" data-id="2" style="display:none;">Tomar Foto</button>
-                <canvas class="photo-container" data-id="2" style="display:none;"></canvas>
-                <div class="image-list-container" data-id="2"></div>
             </div>
-
-            <div class="image-container" data-id="3">
-                <label for="check3">Agregar foto entorno:</label>
-                <input type="checkbox" id="check3" class="div-checkbox" disabled>
-                <button class="open-camera-button" data-id="3">Abrir Cámara</button>
-                <button class="switch-camera-button" data-id="3" style="display:none;">Cambiar Cámara</button>
-                <button class="take-photo-button" data-id="3" style="display:none;">Tomar Foto</button>
-                <canvas class="photo-container" data-id="3" style="display:none;"></canvas>
-                <div class="image-list-container" data-id="3"></div>
-            </div>
-
-            <div class="image-container" data-id="4">
-                <label for="check4">Agregar foto por debajo:</label>
-                <input type="checkbox" id="check4" class="div-checkbox" disabled>
-                <button class="open-camera-button" data-id="4">Abrir Cámara</button>
-                <button class="switch-camera-button" data-id="4" style="display:none;">Cambiar Cámara</button>
-                <button class="take-photo-button" data-id="4" style="display:none;">Tomar Foto</button>
-                <canvas class="photo-container" data-id="4" style="display:none;"></canvas>
-                <div class="image-list-container" data-id="4"></div>
-            </div>
-            
-            <div class="image-container" data-id="5">
-                <label for="check5">Agregar foto novedad:</label>
-                <input type="checkbox" id="check5" class="div-checkbox" disabled>
-                <button class="open-camera-button" data-id="5">Abrir Cámara</button>
-                <button class="switch-camera-button" data-id="5" style="display:none;">Cambiar Cámara</button>
-                <button class="take-photo-button" data-id="5" style="display:none;">Tomar Foto</button>
-                <canvas class="photo-container" data-id="5" style="display:none;"></canvas>
-                <div class="image-list-container" data-id="5"></div>
+            <div id="video-container">
+                <video id="video-preview" autoplay playsinline style="display: none;"></video>
             </div>
         </div>
-        <div class="video">
-            <video id="video-preview" autoplay playsinline style="display: none;"></video>
-        </div>  
     </div>
 
-    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let streams = [];
@@ -186,6 +194,10 @@
 
                         // Incrementar el contador de imágenes
                         imageCounts[containerId]++;
+
+                        // Marcar automáticamente el checkbox
+                        const checkbox = document.getElementById(`check${containerId}`);
+                        checkbox.checked = true;
                     })
                     .catch(error => console.error(`Error al tomar la foto en container ${containerId}:`, error));
             }
